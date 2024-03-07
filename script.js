@@ -1,15 +1,18 @@
-//TO DO
-//USE THE CONSTRUCTOR
-//USE FUNCTION READ/UNREAD FUNCTION OFF THE PROTOTYPE
-
 let myLibrary = [];
-let idCounter = 0;
+let idCounter = 3; //CHANGE IT BACK TO 0 WHEN STARTING FROM SCRATCH
 
 // myLibrary.push(
-//     {'id': 1,'title': 'Eye of the World', 'author': 'Robert Jordan', 'page':735, 'readStatus': true},
-//     {'id': 2,'title': 'The Great Hunt', 'author': 'Robert Jordan', 'page':935, 'readStatus': true},
-//     {'id': 3,'title': 'A Dragon Reborn', 'author': 'Robert Jordan', 'page':834, 'readStatus': false},
+//     Book{'id': 1,'title': 'Eye of the World', 'author': 'Robert Jordan', 'page':735, 'readStatus': true},
+//     Book{'id': 2,'title': 'The Great Hunt', 'author': 'Robert Jordan', 'page':935, 'readStatus': true},
+//     Book{'id': 3,'title': 'A Dragon Reborn', 'author': 'Robert Jordan', 'page':834, 'readStatus': false},
 // );
+
+const book1 = new Book(1, 'Eye of the World', 'Robert Jordan', 735, true);
+const book2 = new Book(2, 'The Great Hunt', 'Robert Jordan', 800, true);
+const book3 = new Book(3, 'The Dragon Reborn', 'Robert Jordan', 900, false);
+myLibrary.push(book1);
+myLibrary.push(book2);
+myLibrary.push(book3);
 
 function Book(id, title, author, pages, readStatus) {
     this.id = id; //NEED TO REMOVE BOOKID
@@ -19,12 +22,18 @@ function Book(id, title, author, pages, readStatus) {
     this.readStatus = readStatus;
 }
 
+Book.prototype.readUnreadBook = function() {
+    this.readStatus = !this.readStatus
+}
+
 //show book to library
 function addBookToLibrary() {
     const bookListTable = document.createElement('table');
     bookListTable.setAttribute("id", "booktable");
+    //create table headers
     bookListTable.innerHTML = "<thead><th>ID</th><th>Title</th><th>Author</th><th>Pages</th><th>Read?</th><th>Options</th></thead>"
     for (book of myLibrary ) {
+        //populate each row and column
         const newRow = document.createElement("tr");
         const tdId = document.createElement("td");
         const tdTitle = document.createElement("td");
@@ -32,23 +41,35 @@ function addBookToLibrary() {
         const tdPages = document.createElement("td");
         const tdRead = document.createElement("td");
         const tdOptions = document.createElement("td");
-        const readBookBtn = document.createElement("button");
-        const btnTxtRead = document.createTextNode("Read / Unread");
-        const deleteBookBtn = document.createElement("button");
-        const btnTxt = document.createTextNode("Delete book");
-
+        
         tdId.textContent = book.id;
         tdTitle.textContent = book.title;
         tdAuthor.textContent = book.author;
         tdPages.textContent = book.pages;
         tdRead.textContent = book.readStatus;
         
-        //Add action buttons to table cell
-        tdOptions.appendChild(readBookBtn);
-        readBookBtn.appendChild(btnTxtRead);
+        //Add Read + Unread toggle
+        const readBookBtn = document.createElement("button");
+        readBookBtn.textContent = book.readStatus ? 'Mark as Unread' : 'Mark as Read';
         readBookBtn.setAttribute("class", "readBookBtn");
         readBookBtn.setAttribute("id", "readBookBtn-" + book.id);
- 
+        tdOptions.appendChild(readBookBtn);
+        
+        //prototypical inheritance from book prototype
+        readBookBtn.addEventListener('click', function() {
+            const bookId = this.getAttribute('id');
+            const matchingID = Number(bookId.split('-')[1]);
+            const book = myLibrary.find(book => book.id === matchingID);
+            if (book) {
+                book.readUnreadBook();
+                clearTable();
+                init();
+            }
+        })
+        
+        //Add Delete button
+        const deleteBookBtn = document.createElement("button");
+        const btnTxt = document.createTextNode("Delete book");
         tdOptions.appendChild(deleteBookBtn);
         deleteBookBtn.appendChild(btnTxt);
         deleteBookBtn.setAttribute("class", "deleteBookBtn");
@@ -106,9 +127,7 @@ form.addEventListener('submit', (e) => {
     let formPages = document.querySelector('#pages').value;
     let formStatus = document.querySelector('#read').value;
 
-    let newBook = new Book(formId, formTitle, formAuthor, formPages, formStatus);
-    // const fd = new FormData(form); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
-    // const obj = Object.fromEntries(fd); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
+    let newBook = new Book(formId, formTitle, formAuthor, formPages, formStatus); //calling the constructor
 
     newBook.id = Number(newBook.id);
     newBook.pages = Number(newBook.pages);
@@ -118,8 +137,7 @@ form.addEventListener('submit', (e) => {
     else {
         newBook.readStatus = false;
     };
-    // const newBook = obj;
-    // console.log(obj);
+
     myLibrary.push(newBook);
     idCounter = Number(formId);
     
@@ -156,33 +174,6 @@ function deleteBtnAddEventLister() {
     })
 }
 
-//MARK BOOK AS READ/UNREAD
-function readUnreadBook(id) {
-    objIndex = myLibrary.findIndex(obj => obj.id === id);
-    if (myLibrary[objIndex].readStatus === true) {
-        myLibrary[objIndex].readStatus = false;
-    }
-    else {
-        myLibrary[objIndex].readStatus = true;
-    }
- 
-    clearTable()
-    init();
-}
-
-function readBtnAddEventListener() {
-    const readBookAllBtns = document.querySelectorAll('.readBookBtn');
-    // console.log(readBookAllBtns);
-    readBookAllBtns.forEach(btn => {
-        btn.addEventListener("click", function() {
-            const buttonId = this.getAttribute('id');
-            // console.log(buttonId);
-            const matchingID = Number(buttonId.split('-')[1]);
-            readUnreadBook(matchingID);
-        })
-    })
-}
-
 //CLEAR TABLE CRUD
 function clearTable() {
     bookTable = document.querySelector("#booktable");
@@ -193,7 +184,7 @@ function clearTable() {
 function init() {
     addBookToLibrary();
     deleteBtnAddEventLister();
-    readBtnAddEventListener();
+    // readBtnAddEventListener();
 }
 
 //INITIALISATION
