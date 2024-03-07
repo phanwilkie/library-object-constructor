@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Project</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="script.js" defer></script>
+</head>
+<body>
+    <div class="target">
+    </div>
+    
+    <section class="modal hidden">
+        <div class="flex">
+            <div><h3>Add a new book to your library</h3></div>
+            <div><button class="btn-close">⨉</button></div>
+            <div>
+               Enter all the details:
+            </div>
+        </div>
+        <form action="" method="post" id="add-book">
+            <div class="modal-fields">
+                <div>
+                    <div>
+                        <label for="id">ID</label>
+                    </div>
+                    <div>
+                        <input type="number" id="id" name="id" readonly />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="title"> Title</label>
+                    </div>
+                    <div>
+                        <input type="text" id="title" name="title" placeholder="The Eye of the World" />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="author"> Author</label>
+                    </div>
+                    <div>
+                        <input type="text" id="author" name="author" placeholder="Robert Jordan" />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="number"> Pages</label>
+                    </div>
+                    <div>
+                        <input type="number" id="pages" name="page" placeholder="250" />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="read"> Read it!</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="read" name="readStatus" checked />
+                    </div>
+                </div>
+                <div class="field-btn">
+                    <button type="submit" class="btn">Add book</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <button class="btn btn-open">Add a new book</button>
+    <div class="overlay hidden"></div>
+      
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+  }
+  
+  body {
+    color: #222;
+    position: relative;
+    min-height: 100vh;
+  }
+
+table {
+    table-layout: fixed;
+    width: 60%;
+    border-collapse: collapse;
+    border: 1px solid black;
+    margin-bottom: 50px;
+  }
+
+th, td {
+  padding: 20px;
+}
+
+th {
+  background: linear-gradient(to bottom, rgb(0 0 0 / 10%), rgb(0 0 0 / 50%));
+  border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+}
+
+form {
+    width: 80%;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 450px;
+    padding: 1.3rem;
+    min-height: 250px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -230px;
+    margin-left: -225px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+  }
+  
+  .modal {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+  }
+
+  .flex {
+    display: grid;
+    grid-template-columns: 4fr 0.5fr;
+    width: 100%;
+  }
+
+  .modal-fields {
+    display: grid;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  
+  label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 20%;
+  }
+  
+  .modal input {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  
+  .modal p {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0.4rem 0 0.2rem;
+  }
+  
+
+  
+  .btn, .deleteBookBtn, .readBookBtn {
+    display: inline-block;
+    padding: 0.8rem 1.4rem;
+    font-weight: 700;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+
+  .deleteBookBtn, .readBookBtn {
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    padding: 2px 8px;
+    text-align: center;
+    margin-left: 20px;
+  }
+
+  .readBookBtn {
+    background-color: rgb(26, 161, 48);
+  }
+
+  .btn-close {
+    /* transform: translate(10px, -20px); */
+    padding: 0.5rem 0.7rem;
+    background: #eee;
+    border-radius: 50%;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+  }
+
+  .modal {
+    z-index: 2;
+  }
+
+  .hidden {
+    display: none;
+  }
