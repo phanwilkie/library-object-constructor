@@ -69,10 +69,12 @@ function addBookToLibrary() {
         
         //Add Delete button
         const deleteBookBtn = document.createElement("button");
+        const btnSpan = document.createElement("span");
         const btnTxt = document.createTextNode("Delete book");
         tdOptions.appendChild(deleteBookBtn);
-        deleteBookBtn.appendChild(btnTxt);
-        deleteBookBtn.setAttribute("class", "deleteBookBtn");
+        deleteBookBtn.appendChild(btnSpan);
+        btnSpan.appendChild(btnTxt);
+        deleteBookBtn.setAttribute("class", "deleteBookBtn deleteBookBtn-blow");
         deleteBookBtn.setAttribute("id", "deleteBookBtn-" + book.id);
 
         newRow.appendChild(tdId);
