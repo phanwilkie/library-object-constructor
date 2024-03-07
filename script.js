@@ -3,16 +3,16 @@
 //USE FUNCTION READ/UNREAD FUNCTION OFF THE PROTOTYPE
 
 let myLibrary = [];
-let id = 3;
+let idCounter = 0;
 
-myLibrary.push(
-    {'id': 1,'title': 'Eye of the World', 'author': 'Robert Jordan', 'page':735, 'readStatus': true},
-    {'id': 2,'title': 'The Great Hunt', 'author': 'Robert Jordan', 'page':935, 'readStatus': true},
-    {'id': 3,'title': 'A Dragon Reborn', 'author': 'Robert Jordan', 'page':834, 'readStatus': false},
-);
+// myLibrary.push(
+//     {'id': 1,'title': 'Eye of the World', 'author': 'Robert Jordan', 'page':735, 'readStatus': true},
+//     {'id': 2,'title': 'The Great Hunt', 'author': 'Robert Jordan', 'page':935, 'readStatus': true},
+//     {'id': 3,'title': 'A Dragon Reborn', 'author': 'Robert Jordan', 'page':834, 'readStatus': false},
+// );
 
-function Book(title, author, pages, readStatus) {
-    this.id = bookID + 1; //NEED TO REMOVE BOOKID
+function Book(id, title, author, pages, readStatus) {
+    this.id = id; //NEED TO REMOVE BOOKID
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -40,7 +40,7 @@ function addBookToLibrary() {
         tdId.textContent = book.id;
         tdTitle.textContent = book.title;
         tdAuthor.textContent = book.author;
-        tdPages.textContent = book.page;
+        tdPages.textContent = book.pages;
         tdRead.textContent = book.readStatus;
         
         //Add action buttons to table cell
@@ -77,7 +77,7 @@ const idField = document.querySelector("#id");
 const openModal = function () {
     modal.classList.remove("hidden");
     overlay.classList.remove("hidden");
-    idField.value = Number(id) + 1;
+    idField.value = Number(idCounter) + 1;
   };
 
 const closeModal = function () {
@@ -100,20 +100,28 @@ const form = document.querySelector('form');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const fd = new FormData(form); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
-    const obj = Object.fromEntries(fd); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
-    //manipulate the object property
-    obj.id = Number(obj.id);
-    if (obj.readStatus === 'on') {
-        obj.readStatus = true;
+    let formId = document.querySelector('#id').value;
+    let formTitle = document.querySelector('#title').value;
+    let formAuthor = document.querySelector('#author').value;
+    let formPages = document.querySelector('#pages').value;
+    let formStatus = document.querySelector('#read').value;
+
+    let newBook = new Book(formId, formTitle, formAuthor, formPages, formStatus);
+    // const fd = new FormData(form); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
+    // const obj = Object.fromEntries(fd); //NEED TO REFACTOR THIS TO OBJECT CONSTRUCTOR
+
+    newBook.id = Number(newBook.id);
+    newBook.pages = Number(newBook.pages);
+    if (newBook.readStatus === 'on') {
+        newBook.readStatus = true;
     }
     else {
-        obj.readStatus = false;
+        newBook.readStatus = false;
     };
-    const newBook = obj;
-    console.log(obj);
+    // const newBook = obj;
+    // console.log(obj);
     myLibrary.push(newBook);
-    id = idField.value;
+    idCounter = Number(formId);
     
     form.reset();
     closeModal();
